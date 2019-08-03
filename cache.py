@@ -4,9 +4,13 @@ class CacheSim:
 	def __init__(self, path, cache_type):
 		self.data_path = path
 		self.cache_type = cache_type
-		self.blocks = 16 
+		self.blocks = 16
+		self.replacement = 0 
 		self.curr_index = 0
 		self.cache = []
+		self.comp_misses = 0
+		self.cap_misses = 0 
+		self.conf_misses = 0
 
 		if cache_type == 0:
 			self.type_len = 16
