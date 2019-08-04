@@ -1,20 +1,21 @@
 import math
-#tests
-
-ef
-
 
 class CacheSim:
 	def __init__(self, path, cache_type):
 		self.data_path = path
 		self.cache_type = cache_type
 		self.blocks = 16
+		# 0 - LRU
+		# 1 - LFU
+		# 2 - RR
 		self.replacement = 0 
 		self.curr_index = 0
 		self.cache = []
 		self.comp_misses = 0
 		self.cap_misses = 0 
 		self.conf_misses = 0
+		
+		self.replacement_dict = {}
 
 		if cache_type == 0:
 			self.type_len = 16
@@ -51,6 +52,11 @@ class CacheSim:
 	def direct_mapped(self, val):
 		addr = val % self.type_len
 		self.cache[addr] = val
+		if self.replacement == 0 or self.replacement == 1:
+			if self.replacement_dict[val] == None:
+				self.replacement_dict[val] = 0
+			self.replacement_dict[val] += 1
+		
 
 	def n_way(self, val):
 		addr = val % self.type_len
